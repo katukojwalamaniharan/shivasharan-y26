@@ -1,0 +1,13 @@
+Category,Resource,Type / Focus,Priority,Recommended Use,URL,Status,Notes
+Checklist,DSA Checklist,Google Drive checklist,High,Review weekly,https://drive.google.com/file/d/1qcbwY3dl2tXPStJsVcoC2baf4qJGHEe2/view?usp=sharing,Not started,
+Java,Codecademy — Learn Java,Interactive Java course,Optional,Use for interactive practice if preferred,https://www.codecademy.com/enrolled/courses/learn-java,Not started,
+Java,MOOC.fi Java Programming,Structured Java course and exercises,High,Recommended main Java resource,https://java-programming.mooc.fi/,Not started,
+Java,Java Programming — Beginner to Master (Udemy),Comprehensive Java course,Optional,"Use instead of another course, not alongside every course",https://www.udemy.com/course/java-se-programming/,Not started,
+DSA,Striver A2Z DSA Sheet,Comprehensive DSA roadmap,High,Recommended primary DSA sheet,https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/,Not started,
+DSA,Rising Brain DSA Sheet,Pattern-based DSA practice,Optional,Alternative sheet; avoid duplicating the main sheet,https://www.risingbrain.org/sheet,Not started,
+DSA,Apna College DSA Sheet,Curated DSA problems,Optional,Alternative practice list,https://dsa.apnacollege.in/sheet/dsa-sheet,Not started,
+DSA,InterviewBit Coding Interview Questions,Interview problem reference,Reference,Use for extra interview practice when needed,https://www.interviewbit.com/coding-interview-questions/,Not started,
+DSA,AlgoMonster,Pattern-based problem solving,Reference,Use for pattern explanations when stuck,https://algo.monster/,Not started,
+Tracking,Codolio Question Tracker,Solved-question tracker,High,Use as the main external progress tracker if desired,https://codolio.com/question-tracker,Not started,
+Handbook,Tech Interview Handbook,Interview preparation guide,Reference,Use later for interview preparation,https://www.techinterviewhandbook.org/,Not started,
+Patterns,Sean Prashad's LeetCode Patterns,Pattern-based problem list,Reference,"Use as a reference, not a second mandatory sheet",https://seanprashad.com/leetcode-patterns/,Not started,

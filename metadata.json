@@ -1,0 +1,6 @@
+{
+  "name": "FAANG Path — 2-Year DSA & CS Mastery Hub",
+  "description": "A comprehensive 4-semester developer workspace for mastering Java, NeetCode 150 & Striver DSA patterns, 7-day spaced repetition, 2-minute spoken explanations, CS fundamentals, and aptitude with role-based resource curation and analytics.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

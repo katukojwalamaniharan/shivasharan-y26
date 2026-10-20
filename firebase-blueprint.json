@@ -1,0 +1,562 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Public profile, role, permissions, and aggregate study metrics for a learner or admin.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Firebase Auth UID of the user."
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "Display name of the user."
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin", "member"],
+          "maxLength": 20,
+          "description": "Role of the user in the platform."
+        },
+        "canEditResources": {
+          "type": "boolean",
+          "description": "Whether the user has permission to add or edit shared resources."
+        },
+        "examLightMode": {
+          "type": "boolean",
+          "description": "Whether Exam Week Light Mode (30-45m revision only) is active."
+        },
+        "workspaceId": {
+          "type": "string",
+          "enum": ["faang-hub"],
+          "maxLength": 32,
+          "description": "Workspace scope identifier for secure list queries."
+        },
+        "solvedCount": {
+          "type": "integer",
+          "description": "Total DSA problems solved by the user."
+        },
+        "masteredCount": {
+          "type": "integer",
+          "description": "Total DSA problems re-solved cold after 7 days."
+        },
+        "spokenCount": {
+          "type": "integer",
+          "description": "Total 2-minute spoken explanations recorded."
+        },
+        "roadmapDoneCount": {
+          "type": "integer",
+          "description": "Total roadmap checklist items completed."
+        },
+        "streakDays": {
+          "type": "integer",
+          "description": "Current daily study streak in days."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of user creation."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of last profile update."
+        }
+      },
+      "required": [
+        "uid",
+        "displayName",
+        "role",
+        "canEditResources",
+        "examLightMode",
+        "workspaceId",
+        "solvedCount",
+        "masteredCount",
+        "spokenCount",
+        "roadmapDoneCount",
+        "streakDays",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "UserPrivateInfo": {
+      "title": "UserPrivateInfo",
+      "description": "Isolated PII record storing the user's email address.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Owner UID."
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 254,
+          "description": "Verified email address."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp."
+        }
+      },
+      "required": ["uid", "email", "createdAt"]
+    },
+    "AdminRecord": {
+      "title": "AdminRecord",
+      "description": "Lookup document granting administrator privileges.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "UID of the admin."
+        },
+        "grantedBy": {
+          "type": "string",
+          "maxLength": 128,
+          "description": "UID of the admin who granted access."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when admin role was granted."
+        }
+      },
+      "required": ["uid", "grantedBy", "createdAt"]
+    },
+    "ResourceItem": {
+      "title": "ResourceItem",
+      "description": "Curated learning resource, sheet, course, or handbook in the shared library.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Unique resource identifier."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "description": "Resource name."
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Resource category (Java, DSA, Tracking, Handbook, Patterns, Git & Shell, Web, Aptitude, CS Fundamentals, Checklist)."
+        },
+        "typeFocus": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Type or pedagogical focus of the resource."
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["High", "Optional", "Reference", "Parked"],
+          "maxLength": 30,
+          "description": "Priority classification."
+        },
+        "recommendedUse": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Guidance on how and when to use this resource."
+        },
+        "url": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "External link to the resource."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["Not started", "In progress", "Completed", "Reference"],
+          "maxLength": 40,
+          "description": "Global curriculum status."
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Additional mentor or student notes."
+        },
+        "visibility": {
+          "type": "string",
+          "enum": ["workspace"],
+          "maxLength": 32,
+          "description": "Workspace visibility scope."
+        },
+        "updatedBy": {
+          "type": "string",
+          "maxLength": 128,
+          "description": "UID of the user who last modified the resource."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp."
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "category",
+        "typeFocus",
+        "priority",
+        "recommendedUse",
+        "url",
+        "status",
+        "notes",
+        "visibility",
+        "updatedBy",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "UserProgress": {
+      "title": "UserProgress",
+      "description": "Per-user checklist state across the 4-semester roadmap, weekly routine, CS fundamentals, and aptitude tracks.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Owner UID."
+        },
+        "checkedRoadmapIds": {
+          "type": "array",
+          "description": "Bounded list of completed roadmap item IDs (max 300)."
+        },
+        "checkedRoutineIds": {
+          "type": "array",
+          "description": "Bounded list of today's completed routine item IDs (max 20)."
+        },
+        "checkedCsFundamentalsIds": {
+          "type": "array",
+          "description": "Bounded list of completed CS Fundamentals & Syllabus topics (max 150)."
+        },
+        "aptitudeSessionsDone": {
+          "type": "integer",
+          "description": "Number of 15-minute IndiaBix aptitude sessions completed."
+        },
+        "logicPuzzlesDone": {
+          "type": "integer",
+          "description": "Number of weekly paper logic puzzles completed."
+        },
+        "mockInterviewsDone": {
+          "type": "integer",
+          "description": "Number of 45-minute mock interviews completed."
+        },
+        "contestsAttended": {
+          "type": "integer",
+          "description": "Number of virtual or live LeetCode contests attended."
+        },
+        "weekdayHours": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Confirmed weekday study hours."
+        },
+        "weekendHours": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Confirmed weekend study hours."
+        },
+        "sem1ExamDates": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Confirmed Semester 1 exam dates."
+        },
+        "week1JavaCheckResult": {
+          "type": "string",
+          "maxLength": 300,
+          "description": "Result of Week 1 Java check (FizzBuzz, reverse array, class with constructor)."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp."
+        }
+      },
+      "required": [
+        "userId",
+        "checkedRoadmapIds",
+        "checkedRoutineIds",
+        "checkedCsFundamentalsIds",
+        "aptitudeSessionsDone",
+        "logicPuzzlesDone",
+        "mockInterviewsDone",
+        "contestsAttended",
+        "weekdayHours",
+        "weekendHours",
+        "sem1ExamDates",
+        "week1JavaCheckResult",
+        "updatedAt"
+      ]
+    },
+    "ProblemLog": {
+      "title": "ProblemLog",
+      "description": "Tracks a learner's solve status, 7-day spaced-repetition review date, and notes for a DSA problem.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Learner UID."
+        },
+        "problemId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Unique problem slug/ID."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "description": "Problem title."
+        },
+        "pattern": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "DSA pattern category."
+        },
+        "difficulty": {
+          "type": "string",
+          "enum": ["Easy", "Medium", "Hard"],
+          "maxLength": 20,
+          "description": "Problem difficulty."
+        },
+        "url": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "LeetCode / NeetCode problem URL."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["todo", "solved", "mastered"],
+          "maxLength": 20,
+          "description": "Current mastery status (solved triggers 7-day review; mastered means re-solved cold after 7 days)."
+        },
+        "usedHint": {
+          "type": "boolean",
+          "description": "Whether a hint was needed after 25-30 minutes."
+        },
+        "spokenExplanationDone": {
+          "type": "boolean",
+          "description": "Whether the 2-minute spoken explanation was completed."
+        },
+        "solvedAtMs": {
+          "type": "integer",
+          "description": "Epoch milliseconds when initially solved."
+        },
+        "nextReviewAtMs": {
+          "type": "integer",
+          "description": "Epoch milliseconds when the 7-day cold re-solve is due."
+        },
+        "reSolvedCount": {
+          "type": "integer",
+          "description": "Number of times re-solved."
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "Approach and edge-case notes."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of update."
+        }
+      },
+      "required": [
+        "userId",
+        "problemId",
+        "title",
+        "pattern",
+        "difficulty",
+        "url",
+        "status",
+        "usedHint",
+        "spokenExplanationDone",
+        "solvedAtMs",
+        "nextReviewAtMs",
+        "reSolvedCount",
+        "notes",
+        "updatedAt"
+      ]
+    },
+    "PatternNote": {
+      "title": "PatternNote",
+      "description": "Written DSA pattern note or logged 2-minute spoken explanation session.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Author UID."
+        },
+        "patternName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "DSA Pattern name."
+        },
+        "problemTitle": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Associated problem title (if recorded for a specific problem)."
+        },
+        "coreIntuition": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 3000,
+          "description": "Written pattern template, trigger signs, and intuition."
+        },
+        "complexityAnalysis": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Time and Space Big-O complexity notes."
+        },
+        "spokenDurationSec": {
+          "type": "integer",
+          "description": "Duration in seconds of the recorded spoken explanation."
+        },
+        "selfRating": {
+          "type": "integer",
+          "description": "Clarity self-rating from 1 to 5."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation server timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Update server timestamp."
+        }
+      },
+      "required": [
+        "userId",
+        "patternName",
+        "problemTitle",
+        "coreIntuition",
+        "complexityAnalysis",
+        "spokenDurationSec",
+        "selfRating",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "ActivityLog": {
+      "title": "ActivityLog",
+      "description": "Daily activity counters for the 365-day consistency heatmap and analytics.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Learner UID."
+        },
+        "date": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 10,
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          "description": "YYYY-MM-DD date string."
+        },
+        "problemsSolved": {
+          "type": "integer",
+          "description": "Problems solved on this date."
+        },
+        "revisionsCompleted": {
+          "type": "integer",
+          "description": "7-day cold re-solves completed on this date."
+        },
+        "spokenRecorded": {
+          "type": "integer",
+          "description": "2-minute spoken explanations recorded on this date."
+        },
+        "roadmapTasksDone": {
+          "type": "integer",
+          "description": "Roadmap tasks checked on this date."
+        },
+        "aptitudeDone": {
+          "type": "integer",
+          "description": "Aptitude / puzzle sessions logged on this date."
+        },
+        "totalActions": {
+          "type": "integer",
+          "description": "Total study actions logged on this date."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of last update."
+        }
+      },
+      "required": [
+        "userId",
+        "date",
+        "problemsSolved",
+        "revisionsCompleted",
+        "spokenRecorded",
+        "roadmapTasksDone",
+        "aptitudeDone",
+        "totalActions",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Public user profiles and study summary metrics."
+    },
+    "/users/{userId}/private/{infoId}": {
+      "schema": { "$ref": "#/entities/UserPrivateInfo" },
+      "description": "Isolated PII email records accessible only to the owner or admin."
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/AdminRecord" },
+      "description": "Admin role lookup documents."
+    },
+    "/resources/{resourceId}": {
+      "schema": { "$ref": "#/entities/ResourceItem" },
+      "description": "Shared curated study resources library."
+    },
+    "/userProgress/{userId}": {
+      "schema": { "$ref": "#/entities/UserProgress" },
+      "description": "User roadmap, routine, CS fundamentals, and open-item state."
+    },
+    "/problemLogs/{logId}": {
+      "schema": { "$ref": "#/entities/ProblemLog" },
+      "description": "Per-problem DSA solve and 7-day spaced-repetition logs."
+    },
+    "/patternNotes/{noteId}": {
+      "schema": { "$ref": "#/entities/PatternNote" },
+      "description": "Written DSA pattern templates and 2-minute spoken explanation logs."
+    },
+    "/activityLogs/{activityId}": {
+      "schema": { "$ref": "#/entities/ActivityLog" },
+      "description": "Daily activity records for the 365-day consistency heatmap."
+    }
+  }
+}
